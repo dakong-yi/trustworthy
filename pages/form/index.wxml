@@ -1,0 +1,50 @@
+<!--pages/form/index.wxml-->
+<view class="page">
+
+	<view class="header">
+
+	</view>
+
+	<view class="body">
+		<view class="form">
+			<t-cell class="mb-16" title="选择城市" arrow hover required note="{{cityText}}" bind:click="onCityPicker" />
+			<t-cell class="mb-16" title="选择时间" arrow hover required note="{{dateText}}" bind:click="onSeasonPicker" />
+			<t-picker
+				visible="{{cityVisible}}"
+				value="{{cityValue}}"
+				data-key="city"
+				title="选择城市"
+				cancelBtn="取消"
+				confirmBtn="确认"
+				bindchange="onPickerChange"
+				bindpick="onColumnChange"
+				bindcancel="onPickerCancel"
+			>
+  		<t-picker-item options="{{citys}}" />
+		</t-picker>
+		<t-picker
+			visible="{{dateVisible}}"
+			value="{{dateValue}}"
+			data-key="date"
+			title="选择时间"
+			cancelBtn="取消"
+			confirmBtn="确认"
+			bindchange="onPickerChange"
+			bindpick="onColumnChange"
+			bindcancel="onPickerCancel"
+		>
+			<t-picker-item options="{{years}}"></t-picker-item>
+			<t-picker-item options="{{seasons}}"></t-picker-item>
+		</t-picker>
+			<t-input label="就诊医院" placeholder="请输入医院" ></t-input>
+			<t-input label="联系人" placeholder="请输入联系人名字" ></t-input>
+			<t-input label="联系人手机" placeholder="请输入联系人手机号" ></t-input>
+			<t-textarea t-class="external-class" placeholder="请输入备注" disableDefaultPadding="{{true}}" />
+			<t-cell class="mb-16" title="半天陪诊"  hover  note="加微信：1234567"  />
+			<t-cell class="mb-16" title="数量"  hover  note="仅剩100"  />
+			<t-cell class="mb-16" title="总价"  hover  note="100元"  />
+			<t-button theme="primary" size="large" block>提交</t-button>
+		</view>
+	</view>
+
+</view>

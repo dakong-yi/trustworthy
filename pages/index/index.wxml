@@ -1,0 +1,58 @@
+<!--index.wxml-->
+<view class="page">
+  <view class="header">
+    <view class="banner">
+      <t-swiper
+        current="{{current}}"
+        autoplay="{{autoplay}}"
+        duration="{{duration}}"
+        interval="{{interval}}"
+        navigation="{{ { type: 'dots' } }}"
+        list="{{swiperList}}"
+        bind:click="onTap"
+        bind:change="onChange"
+        bind:image-load="onImageLoad"
+      >
+      </t-swiper>
+    </view>
+    
+    <view class="grid">
+      <t-grid column="{{4}}">
+        <t-grid-item text="半天陪诊" description="" image="{{img1}}" bind:click="onClickGridItem"/>
+        <t-grid-item text="全天陪诊" description="" image="{{img2}}" />
+        <t-grid-item text="尊享vip" description="" image="{{img3}}" />
+        <t-grid-item text="医院跑腿" description="" image="{{img3}}" />
+      </t-grid>
+      <t-grid column="{{4}}">
+        <t-grid-item text="代办问诊" description="" image="{{img1}}" />
+        <t-grid-item text="代办送药" description="" image="{{img2}}" />
+        <t-grid-item text="送取结果" description="" image="{{img3}}" />
+        <t-grid-item text="陪诊师入住" description="" image="{{img3}}" />
+      </t-grid>
+    </view>
+  </view>
+
+  <view class="body">
+    <view class="cell">
+      <t-cell-group theme="card" >
+        <t-cell title="半天陪诊" description="专业陪诊四小时"  hover arrow>
+          <view class="avatar" slot="left-icon">
+            <t-image src="{{image}}" mode="aspectFill" width="80" height="80" aria-label="" />
+          </view>
+        </t-cell>
+        <t-cell title="全天陪诊" description="专业陪诊八小时" hover arrow>
+          <view class="avatar" slot="left-icon">
+            <t-image src="{{image}}" mode="aspectFill" width="80" height="80" aria-label="" />
+          </view>
+        </t-cell>
+        <t-cell title="尊享VIP陪诊" description="专业陪诊四小时" hover arrow>
+          <view class="avatar" slot="left-icon">
+            <t-image src="{{image}}" mode="aspectFill" width="80" height="80" aria-label="" />
+          </view>
+        </t-cell>
+      </t-cell-group>
+    </view>
+  </view>
+
+</view>
+

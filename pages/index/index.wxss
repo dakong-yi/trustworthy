@@ -1,0 +1,19 @@
+/**index.wxss**/
+.page {
+  background-color: #f2f2f2;
+  height: 100vh;
+}
+.img {
+  width: 100%;
+  height: 100%;
+}
+
+.block {
+  display: block;
+  margin-bottom: 32rpx;
+}
+
+.t-cell-group--card {
+  margin: 0 0rpx !important;
+}
+
