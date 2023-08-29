@@ -1,0 +1,57 @@
+<view class="page">
+	<view class="body order-sure" >
+	<view class="order-wrapper">
+		<view class="order-card goods-wrapper">
+      <t-image src="{{orderCard.thumb}}" t-class="goods-image" mode="aspectFill" />
+      
+			<view class="goods-content">
+        <view class="goods-title">{{orderCard.title}}</view>
+        <view>{{orderCard.specs}}</view>
+      </view>
+      <view class="goods-right">
+        <price wr-class="goods-price" price="{{orderCard.price}}" fill="{{true}}" decimalSmaller />
+        <view class="goods-num">x{{orderCard.num}}</view>
+      </view>
+    </view>
+	</view>
+		
+		<view class="pay-detail">
+    <view class="pay-item">
+      <text>就诊医院</text>
+      <text wr-class="pay-item__right font-bold">{{ orderCard.hospital }}</text>
+    </view>
+		<view class="pay-item">
+      <text>就诊日期</text>
+      <text wr-class="pay-item__right font-bold">{{ orderCard.date }} </text>
+    </view>
+		<view class="pay-item">
+      <text>就诊时间</text>
+      <text wr-class="pay-item__right font-bold">{{ orderCard.time }} </text>
+    </view>
+		<view class="pay-item">
+      <text>所在地</text>
+      <text wr-class="pay-item__right font-bold">{{ orderCard.area }} </text>
+    </view>
+		<view class="pay-item">
+      <text>联系人</text>
+      <text wr-class="pay-item__right font-bold">{{ orderCard.name }} </text>
+    </view>
+		<view class="pay-item">
+      <text>手机号</text>
+      <text wr-class="pay-item__right font-bold">{{ orderCard.phone }} </text>
+    </view>
+		<view class="pay-item">
+      <text>备注</text>
+      <text wr-class="pay-item__right font-bold">{{ orderCard.remark }} </text>
+    </view>
+  </view>
+	<view class="wx-pay-cover">
+    <view class="wx-pay">
+      <price decimalSmaller fill class="price" price="0" />
+      <view class="submit-btn " bindtap="submitOrder">
+        提交订单
+      </view>
+    </view>
+  </view>
+	</view>
+</view> 
