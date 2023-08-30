@@ -7,7 +7,16 @@ const stripeImg = `https://cdn-we-retail.ym.tencent.com/miniapp/order/stripe.png
 Page({
   data: {
     loading: false,
-    orderCard: {}, // 仅用于商品卡片展示
+		orderCard: {}, // 仅用于商品卡片展示
+		showPayDialog:false,
+		current: 0,
+    options: [
+      { value: 0, label: '微信支付' },
+    ],
+    fee:1,
+    currencyType:'CNY',
+    paymentArgs:{orderID:'1'},
+    version:'develop'
   },
   payLock: false,
   onLoad(options) {
@@ -31,6 +40,9 @@ Page({
     this.setData({ orderCard });
   },
 
+	closeDialog() {
+		this.setData({ showPayDialog: false });
+	},
 
 
   handleError() {
@@ -48,55 +60,27 @@ Page({
     this.setData({
       loading: false,
     });
-  },
+  },  
 
-
-  onInput(e) {
-    const { storeNoteIndex } = this.data;
-    this.noteInfo[storeNoteIndex] = e.detail.value;
-  },
-  onBlur() {
-    this.setData({
-      notesPosition: 'center',
-    });
-  },
-  onFocus() {
-    this.setData({
-      notesPosition: 'self',
-    });
-  },
-  onTap() {
-    this.setData({
-      placeholder: '',
-    });
-  },
-  
-
-  onSureCommit() {
-	},
   // 提交订单
   submitOrder() {
    
-    
+		//todo 生成订单，跳转支付页
+		this.setData({
+      showPayDialog: true,
+    });
     
   },
 
   // 处理支付
-  handlePay(data, settleDetailData) {
-    const { channel, payInfo, tradeNo, interactId, transactionId } = data;
-    const { totalAmount, totalPayAmount } = settleDetailData;
-    const payOrderInfo = {
-      payInfo: payInfo,
-      orderId: tradeNo,
-      orderAmt: totalAmount,
-      payAmt: totalPayAmount,
-      interactId: interactId,
-      tradeNo: tradeNo,
-      transactionId: transactionId,
-    };
-
-    if (channel === 'wechat') {
+  handlePay() {
+    this.closeDialog();
+    if (this.data.current === 0) {
       // wechatPayOrder(payOrderInfo);
+      //todo 支付跳过
+      wx.navigateTo({
+        url: '/pages/order/pay-result/index',
+      }) 
     }
   },
 });

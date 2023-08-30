@@ -8,8 +8,7 @@
   },
   "setting": {
     "useCompilerPlugins": [
-      "typescript",
-      "less"
+      "typescript"
     ],
     "coverView": false,
     "es6": true,
