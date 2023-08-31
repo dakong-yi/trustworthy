@@ -3,9 +3,11 @@
     "pages/index/index",
     "pages/form/index",
     "pages/order/index",
+    "pages/join/index",
     "pages/order/pay-result/index",
     "pages/order/order-list/index",
     "pages/usercenter/index"
+
   ],
   "tabBar": {
     "color": "#666666",

@@ -1,0 +1,45 @@
+<view class="page">
+
+<view class="header">
+
+</view>
+
+<view class="body">
+	<view class="form">
+		<t-cell-group>
+		<t-cell  title="地区" bind:click="onPickArea" note="{{locationState.provinceName ? locationState.provinceName+'/':'省' }}{{locationState.cityName ? locationState.cityName+'/':'市'}}{{locationState.districtName ? locationState.districtName+'/':'区'}}" arrow> 
+		</t-cell>
+			
+		<t-cell title="联系人" class="form-cell" t-class-title="t-cell-title" >
+			<t-input data-item="name" slot="note" class="t-input" t-class="field-text" borderless placeholder="请输入联系人名字" bind:change="onInputValue"/>
+		</t-cell>
+		<t-cell title="手机号" class="form-cell" t-class-title="t-cell-title" >
+			<t-input data-item="phone" slot="note" class="t-input" t-class="field-text" borderless placeholder="请输入联系人手机号" bind:change="onInputValue"/>
+		</t-cell>
+		<t-cell title="个人介绍" class="form-cell" t-class-title="t-cell-title" >
+			<view slot="note" class="textarea__wrapper">
+			<t-textarea data-item="remark" slot="note" t-class="external-class" placeholder="请输入个人介绍" autosize bind:change="onInputValue"/>
+			</view>
+		</t-cell>
+		<view class="divider-line" />
+	
+		<t-cell class="mb-16" title="申请入驻（可先咨询客服微信：1234567）"  hover    />
+		<t-cell class="mb-16" title="入驻可享受陪诊技能培训+派单安排"  hover    />
+		<view class="divider-line" />
+		</t-cell-group>
+		<t-button theme="primary" size="large" block bind:tap="onSubmit">提交</t-button>
+	</view>
+</view>
+
+<t-cascader
+	data-item="address"
+	data-type="1"
+	visible="{{areaPickerVisible}}"
+	theme="tab"
+	options="{{areaData}}"
+	value="{{locationState.districtCode}}"
+	title="选择地区"
+	bind:change="onInputValue"
+></t-cascader>
+<t-toast id="t-toast" />
+</view>

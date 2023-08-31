@@ -1,6 +1,4 @@
-// pages/form/index.js
 import Toast from 'tdesign-miniprogram/toast/index';
-//import { fetchDeliveryAddress } from '../../../../services/address/fetchAddress';
 import { areaData } from '../../config/index';
 
 const innerPhoneReg = '^1(?:3\\d|4[4-9]|5[0-35-9]|6[67]|7[0-8]|8\\d|9\\d)\\d{8}$';
@@ -19,19 +17,6 @@ Page({
     areaData: areaData,
     areaPickerVisible: false,
 
-    mode: '',
-    dateVisible: false,
-    date: new Date().getTime(), // 支持时间戳传入
-    dateText: '',
-
-    // 指定选择区间起始值
-    start: '2023-01-01 00:00:00',
-    end: '2099-12-31 00:00:00',
-
-    timeVisible: false,
-    time: '06:00', // 支持时间戳传入
-    timeText: '',
-    hospital: '',
     name: '',
     phone: '',
     remark: '',
@@ -40,38 +25,10 @@ Page({
     verifyTips:'请填写完整内容',
   },
 
-  showPicker(e) {
-    const { mode } = e.currentTarget.dataset;
-    this.setData({
-      mode,
-      [`${mode}Visible`]: true,
-    });
-  },
 
-  hidePicker() {
-    const { mode } = this.data;
-    this.setData({
-      [`${mode}Visible`]: false,
-    });
-  },
-  onConfirm(e) {
-    const { value } = e.detail;
-    const { mode } = this.data;
-
-    console.log('confirm', value);
-
-    this.setData({
-      [mode]: value,
-      [`${mode}Text`]: value,
-    });
-    this.hidePicker();
-  },
 
   
 
-    onColumnChange(e) {
-      console.log('picker pick:', e);
-    },
 
     onPickerChange(e) {
       const { key } = e.currentTarget.dataset;
@@ -144,32 +101,11 @@ Page({
       const { provinceCode,cityCode, districtCode } = this.data.locationState;
       const name = this.data.name;
       const phone = this.data.phone;
-      const hospital = this.data.hospital;
-      const date = this.data.date;
-      const time = this.data.time;
+
       const prefixPhoneReg = String(this.properties.phoneReg || innerPhoneReg);
       const prefixNameReg = String(this.properties.nameReg || innerNameReg);
       const nameRegExp = new RegExp(prefixNameReg);
       const phoneRegExp = new RegExp(prefixPhoneReg);
-      
-      if (!date) {
-        return {
-          isLegal: false,
-          tips: '请选择就诊日期',
-        };
-      }
-      if (!time || !time.trim()) {
-        return {
-          isLegal: false,
-          tips: '请选择就诊时间',
-        };
-      }
-      if (!hospital || !hospital.trim()) {
-        return {
-          isLegal: false,
-          tips: '请填写就诊医院',
-        };
-      }
       if (!name || !name.trim()) {
         return {
           isLegal: false,
