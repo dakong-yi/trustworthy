@@ -17,11 +17,10 @@
     </view>
     
     <view class="grid">
-      <t-grid column="{{4}}">
-        <t-grid-item text="半天陪诊" description="" image="{{img1}}" bind:click="onClickGridItem"/>
-        <t-grid-item text="全天陪诊" description="" image="{{img2}}" />
-        <t-grid-item text="尊享vip" description="" image="{{img3}}" />
-        <t-grid-item text="医院跑腿" description="" image="{{img3}}" />
+      <t-grid column="{{4}}"  >
+        <view wx:for="functions" wx:key="id">
+          <t-grid-item text="{{ item.title }}" description="" image="{{ img1 }}" bind:click="onClickGridItem"/>
+        </view>
       </t-grid>
       <t-grid column="{{4}}">
         <t-grid-item text="代办问诊" description="" image="{{img1}}" />
