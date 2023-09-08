@@ -155,11 +155,11 @@ Page({
 
   jumpNav(e) {
 		const status = e.detail.tabType;
-		wx.switchTab({ url: `/pages/order/order-list/index?status=${status}` });
+		wx.navigateTo({ url: `/pages/order/order-list/index?status=${status}` });
   },
 
   jumpAllOrder() {
-		wx.switchTab({
+		wx.navigateTo({
 			url: '/pages/order/order-list/index',
 		})
 

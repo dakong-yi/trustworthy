@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "选择支付方式",
+  "usingComponents": {
+		"t-radio": "tdesign-miniprogram/radio/radio",
+		"t-button": "tdesign-miniprogram/button/button",
+  	"t-radio-group": "tdesign-miniprogram/radio-group/radio-group"
+  }
+}

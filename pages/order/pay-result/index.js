@@ -20,6 +20,7 @@ Page({
   onTapReturn(e) {
 		const target = e.currentTarget.dataset.type;
     const { orderNo } = this.data;
+
     if (target === 'home') {
       wx.switchTab({ url: '/pages/index/index' });
     } else if (target === 'orderList') {

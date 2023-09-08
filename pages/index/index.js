@@ -1,5 +1,5 @@
 // index.js
-import { fetchFunctions } from "./fetch"
+import { fetchFunctions,fetchBanners,fetchServices } from "./fetch"
 const imageCdn = 'https://tdesign.gtimg.com/miniprogram/images';
 const swiperList = [
   `${imageCdn}/swiper1.png`,
@@ -11,6 +11,8 @@ const swiperList = [
 
 Page({
   data: {
+    banners:[],
+    services:[],
 		img1: 'https://tdesign.gtimg.com/miniprogram/images/example1.png',
     img2: 'https://tdesign.gtimg.com/miniprogram/images/example2.png',
 		img3: 'https://tdesign.gtimg.com/miniprogram/images/example3.png',
@@ -25,13 +27,42 @@ Page({
   },
 
     onLoad(e) {
-      fetchFunctions().then((data) =>{
+      fetchFunctions().then((res) =>{
+        const functions = res.data.map((item)=>{
+          const func = {
+            id:item.id,
+            title:item.attributes.title,
+            image:item.attributes.image,
+            serviceID:item.attributes.service_id,
+          };
+          return func;
+        });
         this.setData({
-          functions: data,
+          functions: functions,
         });
         console.log(this.data.functions);
       });
-      
+
+      fetchBanners().then((res) =>{
+        const banners = res.data.map((item)=>{
+          return item.attributes.image;
+        });
+        this.setData({banners:banners});
+      });
+
+      fetchServices().then((res) =>{
+        const services = res.data.map((item)=>{
+          const service = {
+            id:item.id,
+            title:item.attributes.title,
+            image:item.attributes.image,
+            desc:item.attributes.desc,
+            price:item.attributes.price,
+          };
+          return service;
+        });
+        this.setData({services:services});
+      });
     },
 
     onTap(e) {
@@ -49,9 +80,9 @@ Page({
 		},
 		
 		onClickGridItem(e) {
-			console.log(e);
-			wx.navigateTo({
-				url: '/pages/form/index'
+      const id = e.currentTarget.dataset.id
+      wx.navigateTo({
+				url: '/pages/form/index?id='+id
 			});
 		}
 

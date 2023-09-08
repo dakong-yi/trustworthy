@@ -29,7 +29,7 @@ App({
 					console.log(code);
 					// 在这里可以将 code 发送到开发者服务器进行进一步处理
 					const expireAt = 2*24*3600 + Date.now();
-					const userInfo = { nickName: 'John', age: 25 ,avatarUrl:'https://pic1.zhimg.com/v2-4f8cdd5b17b804d8a3557cf1a2757a9c_r.jpg',expireAt:expireAt };
+					const userInfo = {openid:'123', nickName: 'John', age: 25 ,avatarUrl:'https://pic1.zhimg.com/v2-4f8cdd5b17b804d8a3557cf1a2757a9c_r.jpg',expireAt:expireAt };
 					wx.setStorage({
 						key: 'userInfo',
 						data: userInfo,

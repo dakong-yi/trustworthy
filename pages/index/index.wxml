@@ -8,25 +8,20 @@
         duration="{{duration}}"
         interval="{{interval}}"
         navigation="{{ { type: 'dots' } }}"
-        list="{{swiperList}}"
+        list="{{banners}}"
         bind:click="onTap"
         bind:change="onChange"
         bind:image-load="onImageLoad"
       >
       </t-swiper>
     </view>
-    
+
     <view class="grid">
       <t-grid column="{{4}}"  >
-        <view wx:for="functions" wx:key="id">
-          <t-grid-item text="{{ item.title }}" description="" image="{{ img1 }}" bind:click="onClickGridItem"/>
-        </view>
+          <t-grid-item wx:for="{{ functions }}" wx:for-index="index" wx:key="id" wx:if="{{ index<4 }}" text="{{ item.title }}" description="" image="{{ item.image }}" data-id="{{item.serviceID}}" bind:click="onClickGridItem"/>
       </t-grid>
       <t-grid column="{{4}}">
-        <t-grid-item text="代办问诊" description="" image="{{img1}}" />
-        <t-grid-item text="代办送药" description="" image="{{img2}}" />
-        <t-grid-item text="送取结果" description="" image="{{img3}}" />
-        <t-grid-item text="陪诊师入住" description="" image="{{img3}}" />
+        <t-grid-item wx:for="{{ functions }}" wx:for-index="index" wx:key="id" wx:if="{{ index>=4 }}" text="{{ item.title }}" description="" image="{{ item.image }}" data-id="{{item.serviceID}}" bind:click="onClickGridItem"/>
       </t-grid>
     </view>
   </view>
@@ -34,19 +29,9 @@
   <view class="body">
     <view class="cell">
       <t-cell-group theme="card" >
-        <t-cell title="半天陪诊" description="专业陪诊四小时"  hover arrow>
+        <t-cell wx:for="{{ services }}" wx:key="id" title="{{item.title}}" description="{{item.desc}}"  hover arrow data-id="{{item.id}}" bind:click="onClickGridItem"> 
           <view class="avatar" slot="left-icon">
-            <t-image src="{{image}}" mode="aspectFill" width="80" height="80" aria-label="" />
-          </view>
-        </t-cell>
-        <t-cell title="全天陪诊" description="专业陪诊八小时" hover arrow>
-          <view class="avatar" slot="left-icon">
-            <t-image src="{{image}}" mode="aspectFill" width="80" height="80" aria-label="" />
-          </view>
-        </t-cell>
-        <t-cell title="尊享VIP陪诊" description="专业陪诊四小时" hover arrow>
-          <view class="avatar" slot="left-icon">
-            <t-image src="{{image}}" mode="aspectFill" width="80" height="80" aria-label="" />
+            <t-image src="{{item.image}}" mode="aspectFill" width="80" height="80" aria-label="" />
           </view>
         </t-cell>
       </t-cell-group>

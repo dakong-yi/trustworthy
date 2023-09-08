@@ -1,6 +1,7 @@
 import Toast from 'tdesign-miniprogram/toast/index';
 // import { commitPay, wechatPayOrder } from './pay';
-
+import {submitOrder,updateOrderStatus} from './fetch';
+import {OrderStatus} from './config';
 
 const stripeImg = `https://cdn-we-retail.ym.tencent.com/miniapp/order/stripe.png`;
 
@@ -16,26 +17,31 @@ Page({
     fee:1,
     currencyType:'CNY',
     paymentArgs:{orderID:'1'},
-    version:'develop'
+    version:'develop',
+    formData:{},
+    orderID:'',
   },
   payLock: false,
   onLoad(options) {
+    const service = JSON.parse(decodeURIComponent(options.service));
+    const formData = JSON.parse(decodeURIComponent(options.formData));
     this.setData({
       loading: true,
+      formData
     });
     const orderCard = {
-			thumb:'https://news.blcu.edu.cn/__local/5/F1/81/B3878F10EDE39EE7350771B095A_2CE19E27_14C83.jpg',
-			title:'半天陪诊',
-			price:29900,
+			thumb:service.image,
+			title:service.title,
+			price:formData.amount,
 			num: 1,
-			specs: '全程陪诊4小时',
-			area:'北京市/北京市/朝阳区',
-			name:'张三',
-			phone:'12345678',
-			hospital:'航空总院',
-			date:'2023-10-01',
-			time:'06:00',
-			remark:'暂无',
+			specs: service.desc,
+			area:formData.province+'/'+formData.city+'/'+formData.district,
+			name:formData.name,
+			phone:formData.tel,
+			hospital:formData.hospital,
+			date:formData.appointment_date,
+			time:formData.appointment_time,
+			remark:formData.remark,
 		};
     this.setData({ orderCard });
   },
@@ -64,12 +70,26 @@ Page({
 
   // 提交订单
   submitOrder() {
-   
-		//todo 生成订单，跳转支付页
-		this.setData({
-      showPayDialog: true,
+   const data = this.data.formData;
+   data['status'] = OrderStatus.PENDING_PAYMENT
+
+    submitOrder(data).then((res) =>{
+      const item = res.data;
+      if(!item.id){
+        Toast({
+          context: this,
+          selector: '#t-toast',
+          message: '提交失败',
+        });
+        return;
+      }
+      const orderCard = this.data.orderCard;
+      orderCard['orderNo'] = item.id;
+      const order = encodeURIComponent(JSON.stringify(orderCard))
+      wx.navigateTo({
+        url: '/pages/pay/index?order='+order,
+      });
     });
-    
   },
 
   // 处理支付
@@ -77,10 +97,23 @@ Page({
     this.closeDialog();
     if (this.data.current === 0) {
       // wechatPayOrder(payOrderInfo);
-      //todo 支付跳过
-      wx.navigateTo({
-        url: '/pages/order/pay-result/index',
-      }) 
+      //todo 微信支付跳过
     }
+    const id = this.data.orderID
+    const data = {status:OrderStatus.PENDING_DELIVERY}
+    updateOrderStatus(id,data).then((res) =>{
+        const item = res.data;
+        if(!item.id){
+          Toast({
+            context: this,
+            selector: '#t-toast',
+            message: '支付失败请联系客服',
+          });
+          return;
+        }
+        wx.navigateTo({
+          url: '/pages/order/pay-result/index',
+        }) 
+      });
   },
 });

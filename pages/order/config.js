@@ -8,6 +8,29 @@ export const OrderStatus = {
   CANCELED_PAYMENT: 80, // 已取消，已支付主动取消
   CANCELED_REJECTION: 80, // 已取消，拒收
 };
+export const OrderStatusText = {
+  5:'待支付', // 待支付
+  10:'待进行', // 待发货
+  40:'待完成', // 待收货
+  50:'已完成', // 已完成/待评价
+};
+
+export const OrderStatusButtons = {
+  5:[
+    { primary: false, type: 2, name: '取消订单' },
+    { primary: true, type: 1, name: '付款' }
+    ], // 待支付
+  10:[
+
+    { primary: true, type: 4, name: '申请退款' }
+    ], // 待发货
+  40:[
+
+    { primary: true, type: 3, name: '确认完成' }
+    ], // 待收货
+  50:[], // 已完成/待评价
+};
+
 
 // 售后状态 10:待审核,20:已审核,30:已收货,40:收货异常,50:已完成,60:已关闭;
 export const AfterServiceStatus = {

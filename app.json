@@ -6,8 +6,8 @@
     "pages/join/index",
     "pages/order/pay-result/index",
     "pages/order/order-list/index",
-    "pages/usercenter/index"
-
+    "pages/usercenter/index",
+    "pages/pay/index"
   ],
   "tabBar": {
     "color": "#666666",
@@ -21,12 +21,7 @@
         "iconPath": "/images/home.png",
         "selectedIconPath":"/images/home.png"
       },
-      {
-        "pagePath": "pages/order/order-list/index",
-        "text": "订单",
-        "iconPath": "/images/order.png",
-        "selectedIconPath":"/images/order.png"
-      },
+      
       {
         "pagePath": "pages/usercenter/index",
         "text": "我的",

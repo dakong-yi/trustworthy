@@ -1,6 +1,7 @@
 import Toast from 'tdesign-miniprogram/toast/index';
 import Dialog from 'tdesign-miniprogram/dialog/index';
 import { OrderButtonTypes } from '../../pages/order/config';
+import {httpHeader,host} from "../../config/index"
 
 Component({
   options: {
@@ -79,6 +80,12 @@ Component({
       left: [],
       right: [],
     },
+    showPayDialog:false,
+    current: 0,
+    options: [
+      { value: 0, label: '微信支付' },
+      { value: 1, label: '支付宝支付' },
+    ],
   },
 
   methods: {
@@ -149,13 +156,18 @@ Component({
         });
     },
 
-    onPay() {
-      Toast({
-        context: this,
-        selector: '#t-toast',
-        message: '你点击了去支付',
-        icon: 'check-circle',
+    onPay(data) {
+      const order = encodeURIComponent(JSON.stringify(data))
+      wx.navigateTo({
+        url: '/pages/pay/index?order='+order,
       });
+      // Toast({
+      //   context: this,
+      //   selector: '#t-toast',
+      //   message: '你点击了去支付',
+      //   icon: 'check-circle',
+      // });
+
     },
 
     onBuyAgain() {

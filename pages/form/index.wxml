@@ -36,9 +36,9 @@
 			</t-cell>
 			<view class="divider-line" />
 		
-			<t-cell class="mb-16" title="半天陪诊"  hover  note="加微信：1234567"  />
-			<t-cell class="mb-16" title="数量"  hover  note="仅剩100"  />
-			<t-cell class="mb-16" title="总价"  hover  note="100元"  />
+			<t-cell class="mb-16" title="{{service.title}}"  hover  note="加微信：1234567"  />
+			<!-- <t-cell class="mb-16" title="数量"  hover  note="仅剩100"  /> -->
+			<t-cell class="mb-16"c title="总价"  hover  note="{{service.price/100}}元"  />
 			</t-cell-group>
 			<t-button theme="primary" size="large" block bind:tap="onSubmit">提交</t-button>
 		</view>

@@ -1,0 +1,32 @@
+/* 在小程序的样式文件中定义美化样式 */
+.payment-page {
+  padding: 20rpx;
+  background-color: #f3f3f3;
+}
+
+.payment-title {
+  font-size: 20rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+}
+
+.payment-methods {
+  background-color: #ffffff;
+  border-radius: 5rpx;
+  padding: 20rpx;
+}
+
+.payment-method {
+  margin-bottom: 10rpx;
+}
+
+.payment-button {
+  margin-top: 20rpx;
+  width: 100%;
+  height: 50rpx;
+  background-color: #0088cc;
+  color: #ffffff;
+  font-size: 16rpx;
+  border-radius: 5rpx;
+  border: none;
+}

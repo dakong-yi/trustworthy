@@ -1,0 +1,11 @@
+<!-- 在小程序的页面视图代码中使用 T-Design 组件 -->
+
+<view class="payment-page">
+  <!-- <view class="payment-title">选择付款方式</view> -->
+  <t-radio-group class="payment-methods" value="{{ selectedPaymentMethod }}" bind:change="handlePaymentMethodChange">
+    <block wx:for="{{ paymentMethods }}" wx:key="value">
+      <t-radio class="payment-method" value="{{ item.value }}">{{ item.label }}</t-radio>
+    </block>
+  </t-radio-group>
+  <t-button class="payment-button" bind:tap="handlePayment">确认支付</t-button>
+</view>

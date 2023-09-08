@@ -1,4 +1,5 @@
-import { OrderStatus } from '../config';
+import { OrderStatus,OrderStatusText ,OrderStatusButtons} from '../config';
+import {fetchOrders} from './fetch';
 
 Page({
   data: {
@@ -22,12 +23,11 @@ Page({
     backRefresh: false,
     status: -1,
   },
-
+  
   onLoad(query) {
     let status = parseInt(query.status);
     status = this.data.tabs.map((t) => t.key).includes(status) ? status : -1;
     this.init(status);
-    this.pullDownRefresh = this.selectComponent('#wr-pull-down-refresh');
   },
 
   onShow() {
@@ -37,6 +37,7 @@ Page({
   },
 
   onReachBottom() {
+    console.log(this.data.page.num);
     if (this.data.listLoading === 0) {
       this.getOrderList(this.data.curTab);
     }
@@ -47,12 +48,10 @@ Page({
   },
 
   onPullDownRefresh_(e) {
-    const { callback } = e.detail;
     this.setData({ pullDownRefreshing: true });
     this.refreshList(this.data.curTab)
       .then(() => {
         this.setData({ pullDownRefreshing: false });
-        callback && callback();
       })
       .catch((err) => {
         this.setData({ pullDownRefreshing: false });
@@ -69,38 +68,52 @@ Page({
   },
 
   getOrderList(statusCode = -1, reset = false) {
-    const params = {
-      parameter: {
-        pageSize: this.data.page.size,
-        pageNum: this.data.page.num,
-      },
-		};
-		const orderList = [
-			{
-				orderNo:"1235678",
-				statusDesc:'待付款',
-				status:5,
-				totalAmount:19900,
-				amount:9900,
-				freightFee:0,
-				goodsList:[
-					{
-						id:'1',
-						thumb:'https://news.blcu.edu.cn/__local/5/F1/81/B3878F10EDE39EE7350771B095A_2CE19E27_14C83.jpg',
-						title:'半天陪诊',
-						price:19900,
-						num:1,
-						specs:["全天任选4小时"],
-					}
-				],
-				buttons:[{ primary: false, type: 2, name: '取消订单' },
-				{ primary: true, type: 1, name: '付款' }],
-			}
-		];
-    if (statusCode !== -1) params.parameter.orderStatus = statusCode;
-		this.setData({ listLoading: 0 });
-		this.setData({orderList: orderList});
-    return [];
+    let query = 'filters[status][$gt]=-1';
+    if(statusCode !== -1) {
+      query = 'filters[status][$eq]='+statusCode
+    }
+    query = query + "&pagination[page]="+this.data.page.num+"&pagination[pageSize]="+this.data.page.size
+    this.setData({ listLoading: 1 });
+    fetchOrders(query).then((res) =>{
+      const orderList = res.data.map((item)=>{
+        const order = {
+          orderNo: item.id,
+          status:item.attributes.status,
+          statusDesc:OrderStatusText[item.attributes.status],
+          totalAmount:item.attributes.amount,
+          amount:item.attributes.amount,
+          freightFee:0,
+          goodsList:[
+            {
+              id:item.attributes.service_id,
+              thumb:item.attributes.service_image,
+              title:item.attributes.service_title,
+              price:item.attributes.amount,
+              num:1,
+              specs:[item.attributes.service_desc],
+            },
+          ],
+          buttons:OrderStatusButtons[item.attributes.status]
+        };
+        return order;
+      });
+
+      return new Promise((resolve) => {
+        if (reset) {
+          this.setData({ orderList: [] }, () => resolve());
+        } else resolve();
+      }).then(() => {
+        this.setData({
+          orderList: this.data.orderList.concat(orderList),
+          listLoading: orderList.length && orderList.length == this.data.page.size > 0  ? 0 : 2,
+          page: {num:++this.data.page.num,size:this.data.page.size},
+        });
+      });      
+    })
+    .catch((err) => {
+      this.setData({ listLoading: 3 });
+      return Promise.reject(err);
+    });
   },
 
   onReTryLoad() {
@@ -130,14 +143,11 @@ Page({
   },
 
   refreshList(status = -1) {
-    this.page = {
+    const page = {
       size: this.data.page.size,
       num: 1,
 		};
-		const orderList = [
-			{},
-		];
-    this.setData({ curTab: status, orderList: [] });
+    this.setData({ curTab: status, orderList: [] ,page:page});
 		
     return Promise.all([
       this.getOrderList(status, true),

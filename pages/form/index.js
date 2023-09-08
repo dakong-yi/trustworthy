@@ -1,7 +1,7 @@
 // pages/form/index.js
 import Toast from 'tdesign-miniprogram/toast/index';
-//import { fetchDeliveryAddress } from '../../../../services/address/fetchAddress';
 import { areaData } from '../../config/index';
+import { fetchFunctions,fetchService,submitOrder } from "./fetch"
 
 const innerPhoneReg = '^1(?:3\\d|4[4-9]|5[0-35-9]|6[67]|7[0-8]|8\\d|9\\d)\\d{8}$';
 const innerNameReg = '^[a-zA-Z\\d\\u4e00-\\u9fa5]+$';
@@ -38,6 +38,23 @@ Page({
     orderType:'',
     submitActive: false,
     verifyTips:'请填写完整内容',
+    service:{},
+  },
+
+  onLoad(options) {
+    const id = options.id;
+    fetchService(id).then((res) =>{
+      const item = res.data;
+      const service = {
+        id:item.id,
+        title:item.attributes.title,
+        image:item.attributes.image,
+        desc:item.attributes.desc,
+        price:item.attributes.price,
+      };
+      wx.setNavigationBarTitle({title:service.title});
+      this.setData({service:service});
+    });
   },
 
   showPicker(e) {
@@ -208,20 +225,41 @@ Page({
     onPickArea() {
       this.setData({ areaPickerVisible: true });
     },
+
     onSubmit() {
-      // const { submitActive,verifyTips } = this.data;
-      // if (!submitActive) {
-      //   Toast({
-      //     context: this,
-      //     selector: '#t-toast',
-      //     message: verifyTips,
-      //   });
-      //   return;
-      // }
-      //todo 接口请求
-      wx.navigateTo({
-        url: '/pages/order/index',
-      })
+      const {submitActive,verifyTips} = this.data;
+      if(!submitActive) {
+        Toast({
+          context: this,
+          selector: '#t-toast',
+          message: verifyTips,
+        });
+        return;
+      }
+        const data = {
+          province:this.data.locationState.provinceName,
+          province_code:this.data.locationState.provinceCode,
+          city:this.data.locationState.cityName,
+          city_code:this.data.locationState.cityCode,
+          district:this.data.locationState.districtName,
+          district_code:this.data.locationState.districtCode,
+          hospital:this.data.hospital,
+          tel:this.data.phone,
+          name:this.data.name,
+          appointment_date:this.data.dateText,
+          appointment_time:this.data.timeText,
+          remark:this.data.remark,
+          service_id:this.data.service.id,
+          amount:this.data.service.price,
+          service_title:this.data.service.title,
+          service_image:this.data.service.image,
+          service_desc:this.data.service.desc,
+        };
+        const serviceStr = encodeURIComponent(JSON.stringify(this.data.service))
+        const formDataStr = encodeURIComponent(JSON.stringify(data))
+        wx.navigateTo({
+          url: '/pages/order/index?service='+serviceStr+'&formData='+formDataStr,
+        })
     },
 
 });

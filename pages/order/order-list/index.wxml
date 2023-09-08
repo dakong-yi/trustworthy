@@ -20,6 +20,7 @@
     </t-tabs>
   </view>
   <t-pull-down-refresh
+    value="{{pullDownRefreshing}}"
     id="pull-down-refresh"
     normal-bar-height="{{200}}"
     max-bar-height="{{272}}"
@@ -64,10 +65,11 @@
           <price fill class="real-pay" price="{{order.amount + ''}}" decimalSmaller />
         </view>
         <!-- 订单按钮栏 -->
-        <order-button-bar order="{{order}}" bindrefresh="onRefresh" data-order="{{order}}" />
+        <order-button-bar order="{{order}}" bindrefresh="onRefresh" data-order="{{order}}"  />
       </view>
     </order-card>
     <!-- 列表加载中/已全部加载 -->
+
     <load-more
       wx:if="{{!pullDownRefreshing}}"
       list-is-empty="{{!orderList.length}}"
@@ -76,10 +78,21 @@
     >
       <!-- 空态 -->
       <view slot="empty" class="empty-wrapper">
-        <t-empty t-class="t-empty-text" src="{{emptyImg}}">暂无相关订单</t-empty>
+        <t-empty t-class="empty-cls" t-class-image="t-empty__image" image="{{emptyImg}}"description="暂无相关订单" />
       </view>
     </load-more>
   </t-pull-down-refresh>
 </view>
 <t-toast id="t-toast" />
 <t-dialog id="t-dialog" />
+
+<t-dialog
+			visible="{{showPayDialog}}"
+			title="支付方式"
+			confirm-btn="确定"
+			cancel-btn="取消"
+			bind:confirm="handlePay"
+			bind:cancel="closeDialog"
+		>
+			<t-radio-group  class="dialog-input" placeholder-class="placeholder"  slot="content" borderless bind:change="onChange" value="{{current}}" options="{{options}}" />
+		</t-dialog>
