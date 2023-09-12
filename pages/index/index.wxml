@@ -37,6 +37,6 @@
       </t-cell-group>
     </view>
   </view>
-
+<t-dialog id="t-dialog"/>
 </view>
 

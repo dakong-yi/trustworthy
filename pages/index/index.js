@@ -1,5 +1,6 @@
 // index.js
 import { fetchFunctions,fetchBanners,fetchServices } from "./fetch"
+import Dialog from 'tdesign-miniprogram/dialog/index';
 const imageCdn = 'https://tdesign.gtimg.com/miniprogram/images';
 const swiperList = [
   `${imageCdn}/swiper1.png`,
@@ -40,7 +41,6 @@ Page({
         this.setData({
           functions: functions,
         });
-        console.log(this.data.functions);
       });
 
       fetchBanners().then((res) =>{
@@ -84,7 +84,7 @@ Page({
       wx.navigateTo({
 				url: '/pages/form/index?id='+id
 			});
-		}
+    },
 
 });
 

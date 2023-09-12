@@ -16,4 +16,7 @@
 .t-cell-group--card {
   margin: 0 0rpx !important;
 }
+.t-button {
+  --td-button-default-color:#333;
+}
 

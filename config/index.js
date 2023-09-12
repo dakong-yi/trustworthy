@@ -2,7 +2,8 @@ export const httpHeader = {
   'Content-Type': 'application/json', // 请求头中的内容类型
   'Authorization': 'Bearer 1fad6c24c827b121da151ac9bf82447f909d4c7e175d4db3ff15c9054e1a6dfec8d7a1471aa7f60eb0cf429b24c07a2954de311f723eb49e7a1f85c1b5ae428c40f3d6fbc5550c4aed46456c650bac59277cfd48711b588fd6e18be5ccc841714654b68138f445c81d51f83924800d9237e541c3a5a0c20b71e11e6b740b8006'
 };
-export const host = "https://y7304m6458.goho.co"
+// export const host = "https://y7304m6458.goho.co"
+export const host = "http://127.0.0.1:1337"
 export const config = {
   /** 是否使用mock代替api返回 */
   useMock: true,
